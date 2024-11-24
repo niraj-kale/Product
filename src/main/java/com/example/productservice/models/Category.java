@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Category extends BaseModel {
-//    String title;
+    String title;
     String description;
 //    @ManyToMany
 //    List<Product> productList;

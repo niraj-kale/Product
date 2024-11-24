@@ -52,4 +52,59 @@ class ProductControllerTest {
 
         Assertions.assertThrows(ProductNotFoundException.class, () -> productController.getProductById(id));
     }
+
+    @Test
+    void getAllProducts() {
+        // Arrange
+        Product product1 = new Product();
+        product1.setId(1L);
+        product1.setTitle("test product 1");
+
+        Product product2 = new Product();
+        product2.setId(2L);
+        product2.setTitle("test product 2");
+
+        when(productService.getAllProducts()).thenReturn(java.util.List.of(product1, product2));
+
+        // Act
+        java.util.List<Product> products = productController.getAllProducts();
+
+        // Assert
+        Assertions.assertEquals(2, products.size());
+        Assertions.assertEquals("test product 1", products.get(0).getTitle());
+        Assertions.assertEquals("test product 2", products.get(1).getTitle());
+    }
+
+    @Test
+    void replaceProduct() {
+        // Arrange
+        Long id = 1L;
+        Product product = new Product();
+        product.setId(id);
+        product.setTitle("test product");
+
+        when(productService.replaceProduct(id, product)).thenReturn(product);
+
+        // Act
+        Product p = productController.replaceProduct(id, product);
+
+        // Assert
+        Assertions.assertEquals("test product", p.getTitle());
+    }
+
+    @Test
+    void createProduct() {
+        // Arrange
+        Product product = new Product();
+        product.setId(1L);
+        product.setTitle("test product");
+
+        when(productService.createProduct(product)).thenReturn(product);
+
+        // Act
+        Product p = productController.createProduct(product);
+
+        // Assert
+        Assertions.assertEquals("test product", p.getTitle());
+    }
 }
